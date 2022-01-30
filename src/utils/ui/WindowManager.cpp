@@ -43,8 +43,9 @@ void WindowManager::update() {
 
             case sf::Event::MouseMoved:
                 if (draggingMouse) {
-                    const int x = event.mouseButton.x;
-                    const int y = event.mouseButton.y;
+                    // Here event.mouseButton.x/y doesn't work as expected
+                    const int x = (int) event.size.width;
+                    const int y = (int) event.size.width;
                     cout << "Dragging at: " << x << " " << y << endl;
                 }
                 break;

@@ -25,9 +25,9 @@ private:
     Cell** cells1;
     Cell** cells2;
 
-    CellState getNextState(Cell c);
+    CellState evaluateNextState(Cell c);
 
-    CellState getState(int x, int y);
+    CellState getActualState(int x, int y);
 
     void setActualState(int x, int y, CellState state);
 

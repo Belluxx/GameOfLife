@@ -38,17 +38,17 @@ Board::Board(int w, int h) {
     }
 }
 
-CellState Board::getNextState(Cell c) {
+CellState Board::evaluateNextState(Cell c) {
     int neighbors = 0;
 
-    neighbors += getState(c.x - 1, c.y - 1) == CellState::ALIVE;
-    neighbors += getState(c.x + 0, c.y - 1) == CellState::ALIVE;
-    neighbors += getState(c.x + 1, c.y - 1) == CellState::ALIVE;
-    neighbors += getState(c.x - 1, c.y + 0) == CellState::ALIVE;
-    neighbors += getState(c.x + 1, c.y + 0) == CellState::ALIVE;
-    neighbors += getState(c.x - 1, c.y + 1) == CellState::ALIVE;
-    neighbors += getState(c.x + 0, c.y + 1) == CellState::ALIVE;
-    neighbors += getState(c.x + 1, c.y + 1) == CellState::ALIVE;
+    neighbors += getActualState(c.x - 1, c.y - 1) == CellState::ALIVE;
+    neighbors += getActualState(c.x + 0, c.y - 1) == CellState::ALIVE;
+    neighbors += getActualState(c.x + 1, c.y - 1) == CellState::ALIVE;
+    neighbors += getActualState(c.x - 1, c.y + 0) == CellState::ALIVE;
+    neighbors += getActualState(c.x + 1, c.y + 0) == CellState::ALIVE;
+    neighbors += getActualState(c.x - 1, c.y + 1) == CellState::ALIVE;
+    neighbors += getActualState(c.x + 0, c.y + 1) == CellState::ALIVE;
+    neighbors += getActualState(c.x + 1, c.y + 1) == CellState::ALIVE;
 
     if (neighbors < MIN_NEIGHBOURS) return CellState::DEAD;
     if (neighbors == NEW_NEIGHBOURS) return CellState::ALIVE;
@@ -56,7 +56,7 @@ CellState Board::getNextState(Cell c) {
     return c.state;
 }
 
-CellState Board::getState(int x, int y) {
+CellState Board::getActualState(int x, int y) {
     if (iteration % 2 == 0) {
         if (positionValid(x, y)) return cells1[y][x].state;
     } else {
@@ -95,13 +95,13 @@ void Board::next() {
     if (iteration % 2 == 0) {
         for (int y = 0; y < h; y++) {
             for (int x = 0; x < w; x++) {
-                cells2[y][x].state = getNextState(cells1[y][x]);
+                cells2[y][x].state = evaluateNextState(cells1[y][x]);
             }
         }
     } else {
         for (int y = 0; y < h; y++) {
             for (int x = 0; x < w; x++) {
-                cells1[y][x].state = getNextState(cells2[y][x]);
+                cells1[y][x].state = evaluateNextState(cells2[y][x]);
             }
         }
     }
