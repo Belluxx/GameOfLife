@@ -7,6 +7,9 @@ WindowManager::WindowManager(int w, int h, const string &title, int fps, int del
     this->window->setFramerateLimit(fps);
     this->draggingMouse = false;
 
+    this->colWidth = (float) getWidth() / (float) this->board->w;
+    this->rowHeight = (float) getHeight() / (float) this->board->h;
+
     this->matrix = new bool* [this->board->h];
     for (int y = 0; y < this->board->h; y++) {
         this->matrix[y] = new bool[this->board->w];
@@ -19,7 +22,7 @@ void WindowManager::update() {
 
     drawMatrix(board->w, board->h, 1, sf::Color(0x111111FF), matrix, sf::Color::White);
 
-    if (ms > delayForIteration) {
+    if (ms > delayForIteration && !draggingMouse) {
         board->next();
         board->getMatrix(matrix);
         clock.restart();
@@ -37,7 +40,9 @@ void WindowManager::update() {
                     const int x = event.mouseButton.x;
                     const int y = event.mouseButton.y;
                     cout << "Click at: " << x << " " << y << endl;
+
                     draggingMouse = true;
+                    board->setActualState(x / (int) colWidth, y / (int) rowHeight, CellState::ALIVE);
                 }
                 break;
 
@@ -45,8 +50,10 @@ void WindowManager::update() {
                 if (draggingMouse) {
                     // Here event.mouseButton.x/y doesn't work as expected
                     const int x = (int) event.size.width;
-                    const int y = (int) event.size.width;
+                    const int y = (int) event.size.height;
                     cout << "Dragging at: " << x << " " << y << endl;
+
+                    board->setActualState(x / (int) colWidth, y / (int) rowHeight, CellState::ALIVE);
                 }
                 break;
 
@@ -102,9 +109,6 @@ void WindowManager::drawRow(float y, float thickness, sf::Color col) const {
 }
 
 void WindowManager::drawGrid(int columns, int rows, float thickness, sf::Color col) {
-    const float colWidth = (float) getWidth() / (float) columns;
-    const float rowHeight = (float) getHeight() / (float) rows;
-
     for (int c = 0; c < columns; c++) {
         drawColumn(colWidth * (float) c, thickness, col);
     }
@@ -117,9 +121,6 @@ void WindowManager::drawGrid(int columns, int rows, float thickness, sf::Color c
 void WindowManager::drawMatrix(int columns, int rows, float thickness, sf::Color col, bool** activationMatrix,
                                sf::Color activationCol) {
     drawGrid(columns, rows, thickness, col);
-
-    const float colWidth = (float) getWidth() / (float) columns;
-    const float rowHeight = (float) getHeight() / (float) rows;
 
     for (int y = 0; y < rows; y++) {
         for (int x = 0; x < columns; x++) {

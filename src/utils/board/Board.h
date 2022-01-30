@@ -27,10 +27,6 @@ private:
 
     CellState evaluateNextState(Cell c);
 
-    CellState getActualState(int x, int y);
-
-    void setActualState(int x, int y, CellState state);
-
     bool positionValid(int x, int y) const;
 
 public:
@@ -42,6 +38,10 @@ public:
     void setInitialPattern(Cell* pattern, int patternSize);
 
     void next();
+
+    CellState getActualState(int x, int y);
+
+    void setActualState(int x, int y, CellState state);
 
     void getMatrix(bool** matrix);
 };

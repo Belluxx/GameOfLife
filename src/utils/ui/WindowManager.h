@@ -10,6 +10,9 @@ using namespace std;
 
 class WindowManager {
 private:
+    float colWidth;
+    float rowHeight;
+
     void drawColumn(float x, float thickness, sf::Color col) const;
 
     void drawRow(float y, float thickness, sf::Color col) const;
