@@ -109,6 +109,16 @@ void Board::next() {
     iteration++;
 }
 
+void Board::reset() {
+    iteration = 0;
+    for (int y = 0; y < h; y++) {
+        for (int x = 0; x < w; x++) {
+            cells1[y][x].state = CellState::DEAD;
+            cells2[y][x].state = CellState::DEAD;
+        }
+    }
+}
+
 void Board::getMatrix(bool** matrix) {
     if (iteration % 2 == 0) {
         for (int y = 0; y < h; y++) for (int x = 0; x < w; x++) matrix[y][x] = (cells1[y][x].state == CellState::ALIVE);

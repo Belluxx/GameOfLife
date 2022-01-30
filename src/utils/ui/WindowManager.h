@@ -12,6 +12,9 @@ class WindowManager {
 private:
     float colWidth;
     float rowHeight;
+    int delayForIteration;
+    bool draggingMouse;
+    bool** matrix;
 
     void drawColumn(float x, float thickness, sf::Color col) const;
 
@@ -26,9 +29,7 @@ public:
     sf::Clock clock;
     Board* board;
 
-    bool** matrix;
-    bool draggingMouse;
-    int delayForIteration;
+    bool paused;
 
     WindowManager(int w, int h, const string &title, int fps, int delayForIteration, Board* board);
 

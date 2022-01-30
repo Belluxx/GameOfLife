@@ -6,6 +6,7 @@ WindowManager::WindowManager(int w, int h, const string &title, int fps, int del
     this->board = board;
     this->window->setFramerateLimit(fps);
     this->draggingMouse = false;
+    this->paused = false;
 
     this->colWidth = (float) getWidth() / (float) this->board->w;
     this->rowHeight = (float) getHeight() / (float) this->board->h;
@@ -22,7 +23,7 @@ void WindowManager::update() {
 
     drawMatrix(board->w, board->h, 1, sf::Color(0x111111FF), matrix, sf::Color::White);
 
-    if (ms > delayForIteration && !draggingMouse) {
+    if (ms > delayForIteration && !draggingMouse && !paused) {
         board->next();
         board->getMatrix(matrix);
         clock.restart();
@@ -34,6 +35,29 @@ void WindowManager::update() {
             case sf::Event::Closed:
                 window->close();
                 break;
+
+            case sf::Event::KeyPressed:
+                switch (event.key.code) {
+                    case sf::Keyboard::Space:
+                        paused = !paused;
+                        break;
+
+                    case sf::Keyboard::R:
+                        board->reset();
+                        break;
+
+                    case sf::Keyboard::Up:
+                        if (delayForIteration > 0) {
+                            delayForIteration -= 10;
+                        }
+                        break;
+
+                    case sf::Keyboard::Down:
+                        if (delayForIteration < 500) {
+                            delayForIteration += 10;
+                        }
+                        break;
+                }
 
             case sf::Event::MouseButtonPressed:
                 if (event.mouseButton.button == sf::Mouse::Left) {

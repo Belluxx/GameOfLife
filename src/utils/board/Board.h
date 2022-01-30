@@ -39,6 +39,8 @@ public:
 
     void next();
 
+    void reset();
+
     CellState getActualState(int x, int y);
 
     void setActualState(int x, int y, CellState state);
