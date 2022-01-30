@@ -21,11 +21,11 @@ Board::Board(int w, int h) {
     this->iteration = 0;
 
     cells1 = new Cell* [h];
-    for (int i = 0; i < w; i++)
+    for (int i = 0; i < h; i++)
         cells1[i] = new Cell[w];
 
     cells2 = new Cell* [h];
-    for (int i = 0; i < w; i++)
+    for (int i = 0; i < h; i++)
         cells2[i] = new Cell[w];
 
     for (int y = 0; y < h; y++) {
@@ -117,20 +117,3 @@ void Board::getMatrix(bool** matrix) {
     }
 }
 
-void Board::printMatrix() {
-    if (iteration % 2 == 0) {
-        for (int y = 0; y < h; y++) {
-            for (int x = 0; x < w; x++) {
-                cout << (cells1[y][x].state == CellState::ALIVE ? ALIVE_TAG : DEAD_TAG);
-            }
-            cout << endl;
-        }
-    } else {
-        for (int y = 0; y < h; y++) {
-            for (int x = 0; x < w; x++) {
-                cout << (cells2[y][x].state == CellState::ALIVE ? ALIVE_TAG : DEAD_TAG);
-            }
-            cout << endl;
-        }
-    }
-}

@@ -1,36 +1,41 @@
 #ifndef GAMEOFLIFE_WINDOWMANAGER_H
 #define GAMEOFLIFE_WINDOWMANAGER_H
 
+#include <iostream>
 #include <string>
 #include <SFML/Graphics.hpp>
+#include "../board/Board.h"
 
 using namespace std;
 
 class WindowManager {
 private:
+    void drawColumn(float x, float thickness, sf::Color col) const;
+
+    void drawRow(float y, float thickness, sf::Color col) const;
+
+    void drawRect(float w, float h, sf::Vector2f pos, sf::Color col) const;
+
+    void drawGrid(int columns, int rows, float thickness, sf::Color col);
 
 public:
     sf::RenderWindow* window;
+    sf::Clock clock;
+    Board* board;
 
-    WindowManager(int w, int h, const string &title);
+    bool** matrix;
+    bool draggingMouse;
+    int delayForIteration;
+
+    WindowManager(int w, int h, const string &title, int fps, int delayForIteration, Board* board);
 
     void update();
 
-    bool isRunning();
+    bool isRunning() const;
 
-    int getWidth();
+    int getWidth() const;
 
-    int getHeight();
-
-    void drawLine(sf::Vector2f start, sf::Vector2f end, sf::Color col);
-
-    void drawColumn(float x, float thickness, sf::Color col);
-
-    void drawRow(float y, float thickness, sf::Color col);
-
-    void drawRect(float w, float h, sf::Vector2f pos, sf::Color col);
-
-    void drawGrid(int columns, int rows, float thickness, sf::Color col);
+    int getHeight() const;
 
     void drawMatrix(int columns, int rows, float thickness, sf::Color col, bool** activationMatrix, sf::Color activationCol);
 };

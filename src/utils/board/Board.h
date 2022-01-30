@@ -21,8 +21,6 @@ private:
     static const int MIN_NEIGHBOURS = 2;
     static const int MAX_NEIGHBOURS = 3;
     static const int NEW_NEIGHBOURS = 3;
-    static const char ALIVE_TAG = '#';
-    static const char DEAD_TAG = '.';
 
     Cell** cells1;
     Cell** cells2;
@@ -46,8 +44,6 @@ public:
     void next();
 
     void getMatrix(bool** matrix);
-
-    void printMatrix();
 };
 
 
