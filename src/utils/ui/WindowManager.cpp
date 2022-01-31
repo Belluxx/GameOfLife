@@ -1,4 +1,5 @@
 #include "WindowManager.h"
+#include "../board/Patterns.h"
 
 WindowManager::WindowManager(int w, int h, const string &title, int fps, int delayForIteration, Board* board) {
     this->window = new sf::RenderWindow(sf::VideoMode(w, h), title);
@@ -6,6 +7,7 @@ WindowManager::WindowManager(int w, int h, const string &title, int fps, int del
     this->board = board;
     this->window->setFramerateLimit(fps);
     this->draggingMouse = false;
+    this->placingPattern = false;
     this->paused = false;
 
     this->colWidth = (float) getWidth() / (float) this->board->w;
@@ -32,14 +34,19 @@ void WindowManager::update() {
     sf::Event event{};
     while (window->pollEvent(event)) {
         switch (event.type) {
-            case sf::Event::Closed:
+            case sf::Event::Closed: {
                 window->close();
                 break;
+            }
 
-            case sf::Event::KeyPressed:
+            case sf::Event::KeyPressed: {
                 switch (event.key.code) {
                     case sf::Keyboard::Space:
                         paused = !paused;
+                        break;
+
+                    case sf::Keyboard::P:
+                        placingPattern = !placingPattern;
                         break;
 
                     case sf::Keyboard::R:
@@ -48,29 +55,37 @@ void WindowManager::update() {
 
                     case sf::Keyboard::Up:
                         if (delayForIteration > 0) {
-                            delayForIteration -= 10;
+                            delayForIteration -= 30;
                         }
                         break;
 
                     case sf::Keyboard::Down:
-                        if (delayForIteration < 500) {
-                            delayForIteration += 10;
+                        if (delayForIteration < 1000) {
+                            delayForIteration += 30;
                         }
                         break;
                 }
+            }
 
-            case sf::Event::MouseButtonPressed:
-                if (event.mouseButton.button == sf::Mouse::Left) {
-                    const int x = event.mouseButton.x;
-                    const int y = event.mouseButton.y;
-                    cout << "Click at: " << x << " " << y << endl;
+            case sf::Event::MouseButtonPressed: {
+                const int x = event.mouseButton.x;
+                const int y = event.mouseButton.y;
+                const int cellX = x / (int) colWidth;
+                const int cellY = y / (int) rowHeight;
+                cout << "Click at: " << x << " " << y << endl;
 
-                    draggingMouse = true;
-                    board->setActualState(x / (int) colWidth, y / (int) rowHeight, CellState::ALIVE);
+                if (placingPattern) {
+                    board->insertPattern(cellX, cellY, Patterns::GLIDER, Patterns::GLIDER_SIZE);
+                } else {
+                    if (event.mouseButton.button == sf::Mouse::Left) {
+                        draggingMouse = true;
+                        board->setActualState(cellX, cellY, CellState::ALIVE);
+                    }
                 }
                 break;
+            }
 
-            case sf::Event::MouseMoved:
+            case sf::Event::MouseMoved: {
                 if (draggingMouse) {
                     // Here event.mouseButton.x/y doesn't work as expected
                     const int x = (int) event.size.width;
@@ -80,8 +95,9 @@ void WindowManager::update() {
                     board->setActualState(x / (int) colWidth, y / (int) rowHeight, CellState::ALIVE);
                 }
                 break;
+            }
 
-            case sf::Event::MouseButtonReleased:
+            case sf::Event::MouseButtonReleased: {
                 if (event.mouseButton.button == sf::Mouse::Left) {
                     const int x = event.mouseButton.x;
                     const int y = event.mouseButton.y;
@@ -89,6 +105,7 @@ void WindowManager::update() {
                     draggingMouse = false;
                 }
                 break;
+            }
         }
     }
 

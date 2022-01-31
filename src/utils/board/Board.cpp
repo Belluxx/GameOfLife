@@ -84,10 +84,10 @@ bool Board::positionValid(int x, int y) const {
  * @param pattern the array of cells that defines the pattern
  * @param patternSize the length of the cells array
  */
-void Board::setInitialPattern(Cell* pattern, int patternSize) {
+void Board::insertPattern(int x, int y, const Cell* pattern, const int patternSize) {
     for (int i = 0; i < patternSize; i++) {
         Cell c = pattern[i];
-        setActualState(w / 2 + c.x, h / 2 + c.y, c.state);
+        setActualState(x + c.x, y + c.y, c.state);
     }
 }
 

@@ -35,7 +35,7 @@ public:
 
     Board(int w, int h);
 
-    void setInitialPattern(Cell* pattern, int patternSize);
+    void insertPattern(int x, int y, const Cell* pattern, const int patternSize);
 
     void next();
 

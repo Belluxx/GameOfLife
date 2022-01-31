@@ -14,6 +14,7 @@ private:
     float rowHeight;
     int delayForIteration;
     bool draggingMouse;
+    bool placingPattern;
     bool** matrix;
 
     void drawColumn(float x, float thickness, sf::Color col) const;
