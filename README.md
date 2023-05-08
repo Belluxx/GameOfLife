@@ -11,3 +11,10 @@ Basic Conway's game of life implementation in C++/SFML
 6. `cmake .. -DCMAKE_BUILD_TYPE=Release`
 7. `make`
 8. Run the compiled binary with `./GameOfLife`
+
+## Play
+* `Spacebar`: Pause and restart the game
+* `R`: Reset the game
+* `P`: Switch placing pattern (work in progress)
+* `Arrow up`: Increase simulation speed
+* `Arrow down`: Decrease simulation speed
