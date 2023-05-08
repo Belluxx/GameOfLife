@@ -74,6 +74,7 @@ void WindowManager::update() {
                 const int cellY = y / (int) rowHeight;
                 cout << "Click at: " << x << " " << y << endl;
 
+                // TODO: Replace boolean pattern selection with number from keyboard associated with pattern
                 if (placingPattern) {
                     board->insertPattern(cellX, cellY, Patterns::GLIDER, Patterns::GLIDER_SIZE);
                 } else {
