@@ -66,9 +66,13 @@ void WindowManager::update() {
                         break;
                     
                     default:
-                        cout << "Unknown key pressed" << endl;
+                        cout << "Unknown key pressed: " << event.key.code << endl;
                         break;
                 }
+            }
+
+            case sf::Event::KeyReleased: {
+                break;
             }
 
             case sf::Event::MouseButtonPressed: {
@@ -112,9 +116,35 @@ void WindowManager::update() {
                 break;
             }
 
-            default:
-                cout << "Unknown event occurred" << endl;
+            case sf::Event::TextEntered: {
+                cout << "Char pressed: " << static_cast<char>(event.text.unicode) << endl;
                 break;
+            }
+
+            case sf::Event::GainedFocus: {
+                cout << "Gained focus" << endl;
+                break;
+            }
+
+            case sf::Event::LostFocus: {
+                cout << "Lost focus" << endl;
+                break;
+            }
+
+            case sf::Event::MouseEntered: {
+                cout << "Mouse entered the window" << endl;
+                break;
+            }
+
+            case sf::Event::MouseLeft: {
+                cout << "Mouse exited the window" << endl;
+                break;
+            }
+
+            default: {
+                cout << "Unknown event occurred: " << event.type << endl;
+                break;
+            }
         }
     }
 
