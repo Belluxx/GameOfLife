@@ -2,7 +2,7 @@
 #include "../board/Patterns.h"
 
 WindowManager::WindowManager(int w, int h, const string &title, int fps, int delayForIteration, Board* board) {
-    this->window = new sf::RenderWindow(sf::VideoMode(w, h), title);
+    this->window = new sf::RenderWindow(sf::VideoMode(w, h), title, sf::Style::Titlebar | sf::Style::Close);
     this->delayForIteration = delayForIteration;
     this->board = board;
     this->window->setFramerateLimit(fps);
