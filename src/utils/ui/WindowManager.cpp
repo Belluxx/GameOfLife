@@ -64,6 +64,10 @@ void WindowManager::update() {
                             delayForIteration += 30;
                         }
                         break;
+                    
+                    default:
+                        cout << "Unknown key pressed" << endl;
+                        break;
                 }
             }
 
@@ -107,6 +111,10 @@ void WindowManager::update() {
                 }
                 break;
             }
+
+            default:
+                cout << "Unknown event occurred" << endl;
+                break;
         }
     }
 
