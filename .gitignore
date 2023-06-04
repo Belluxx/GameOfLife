@@ -2,5 +2,7 @@ cmake-build-debug/
 cmake-build-release/
 Release/
 build/
+.cache/
 .idea/
 .vscode
+.DS_Store
